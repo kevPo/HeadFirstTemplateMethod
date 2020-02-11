@@ -1,9 +1,20 @@
 ﻿using System;
+using HeadFirstTemplateMethod.Brewers;
+using HeadFirstTemplateMethod.Condiments;
 
 namespace HeadFirstTemplateMethod
 {
-    public abstract class CaffeineBeverage
+    public class CaffeineBeverage
     {
+        private readonly IBrewer brewer;
+        private readonly ICondiments condiments;
+
+        public CaffeineBeverage(IBrewer brewer, ICondiments condiments)
+        {
+            this.brewer = brewer;
+            this.condiments = condiments;
+        }
+
         public void PrepareRecipe()
         {
             BoilWater();
@@ -12,17 +23,24 @@ namespace HeadFirstTemplateMethod
             AddCondiments();
         }
 
-        protected abstract void Brew();
-        protected abstract void AddCondiments();
-
         private void BoilWater()
         {
             Console.WriteLine("Boiling water");
         }
 
+        private void Brew()
+        {
+            brewer.Brew();
+        }
+
         private void PourInCup()
         {
             Console.WriteLine("Pouring into cup");
+        }
+
+        protected void AddCondiments()
+        {
+            condiments.AddCondiments();
         }
     }
 }
